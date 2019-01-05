@@ -6,9 +6,11 @@ extends Node
 #	"pos": { "x": int, "y": int },
 #   "vel": { "x": int, "y": int },
 # }
+export(bool) var debug_print = true
 const PORT = 60607
-const BROADCAST_IP = "192.168.42.255"
-#const BROADCAST_IP = "127.0.0.1"
+#const BROADCAST_IP = "192.168.42.255" # home network broadcast
+const BROADCAST_IP = "127.0.0.1" # localhost
+#const BROADCAST_IP = "255.255.255.255" # broadcast everywhere, doesn't work in Godot 3.0: https://github.com/godotengine/godot/issues/20216
 const LISTEN_IP = "0.0.0.0"
 var peer
 var example =  {
@@ -17,16 +19,17 @@ var example =  {
 	"pos": { "x": 0, "y": 0 },
 	"vel": { "x": 0, "y": 0 },
  }
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+
 signal object_received
 
 func _ready():
 	peer = PacketPeerUDP.new()
-	peer.set_dest_address(BROADCAST_IP, PORT)
+	if (peer.set_dest_address(BROADCAST_IP, PORT) != OK):
+		if (debug_print):
+			print("error setting destination")
 	if (peer.listen(PORT, LISTEN_IP) != OK):
-		print("error listening")
+		if (debug_print):
+			print("error listening")
 
 func _process(delta):
 	if peer.get_available_packet_count() > 0:
@@ -36,19 +39,17 @@ func receive_packet():
 	var packet = peer.get_packet()
 	var json = packet.get_string_from_utf8()
 	var dict = JSON.parse(json).result
+	if (debug_print):
+		print("packet received: ", dict)
 	emit_signal("object_received", dict)
 
 func send_dict(to_send):
 	peer.set_dest_address(BROADCAST_IP, PORT)
 	var json = JSON.print(to_send)
 	var utf8 = json.to_utf8()
-	peer.put_packet(utf8)
-	print("sending packet: ", json)
-
-func _on_UDPNetwork_object_received(dict):
-	print(dict)
-	print(typeof(dict))
-	print(dict["test"])
-
-func _on_Timer_timeout():
-	send_dict(example) # replace with function body
+	if (peer.put_packet(utf8) != OK):
+		if (debug_print):
+			print("sending packet failed")
+	else:
+		if (debug_print):
+			print("sending packet: ", json)

@@ -2,19 +2,9 @@
 
 [ext_resource path="res://UDPNetwork.gd" type="Script" id=1]
 
-[node name="UDPNetwork" type="Node" index="0"]
+[node name="UDPNetwork" type="Node"]
 
 script = ExtResource( 1 )
-
-[node name="Timer" type="Timer" parent="." index="0"]
-
-process_mode = 1
-wait_time = 0.5
-one_shot = false
-autostart = true
-
-[connection signal="object_received" from="." to="." method="_on_UDPNetwork_object_received"]
-
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+debug_print = true
 
 

@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="UDP Network Example"
-run/main_scene="res://UDPNetwork.tscn"
+run/main_scene="res://ExampleWorld.tscn"
 config/icon="res://icon.png"
 
 [rendering]
