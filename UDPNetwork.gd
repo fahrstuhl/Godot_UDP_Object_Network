@@ -3,8 +3,8 @@ extends Node
 # {
 #   "origin": String,
 #   "name": String,
-#	"pos": { "x": int, "y": int },
-#   "vel": { "x": int, "y": int },
+#	"pos": { "x": float, "y": float },
+#   "vel": { "x": float, "y": float },
 # }
 export(bool) var debug_print = true
 const PORT = 60607
