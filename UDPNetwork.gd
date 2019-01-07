@@ -25,11 +25,9 @@ signal object_received
 func _ready():
 	peer = PacketPeerUDP.new()
 	if (peer.set_dest_address(BROADCAST_IP, PORT) != OK):
-		if (debug_print):
-			print("error setting destination")
+		print("error setting destination")
 	if (peer.listen(PORT, LISTEN_IP) != OK):
-		if (debug_print):
-			print("error listening")
+		print("error listening")
 
 func _process(delta):
 	if peer.get_available_packet_count() > 0:
@@ -48,8 +46,7 @@ func send_dict(to_send):
 	var json = JSON.print(to_send)
 	var utf8 = json.to_utf8()
 	if (peer.put_packet(utf8) != OK):
-		if (debug_print):
-			print("sending packet failed")
+		print("sending packet failed")
 	else:
 		if (debug_print):
 			print("sending packet: ", json)
