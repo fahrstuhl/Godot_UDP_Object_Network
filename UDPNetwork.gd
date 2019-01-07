@@ -1,5 +1,5 @@
 extends Node
-## Object Dict specification:
+## Object JSON specification:
 # {
 #   "origin": String,
 #   "name": String,
@@ -13,12 +13,6 @@ const BROADCAST_IP = "127.0.0.1" # localhost
 #const BROADCAST_IP = "255.255.255.255" # broadcast everywhere, doesn't work in Godot 3.0: https://github.com/godotengine/godot/issues/20216
 const LISTEN_IP = "0.0.0.0" # listen for packets on every interface
 var peer
-var example =  {
-	"origin": "example",
-	"name": "object",
-	"pos": { "x": 0, "y": 0 },
-	"vel": { "x": 0, "y": 0 },
- }
 
 signal object_received
 
