@@ -42,7 +42,6 @@ func receive_packet():
 	emit_signal("object_received", dict)
 
 func send_dict(to_send):
-	peer.set_dest_address(BROADCAST_IP, PORT)
 	var json = JSON.print(to_send)
 	var utf8 = json.to_utf8()
 	if (peer.put_packet(utf8) != OK):
