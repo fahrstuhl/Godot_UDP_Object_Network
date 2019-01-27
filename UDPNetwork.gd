@@ -3,13 +3,13 @@ extends Node
 # {
 #   "origin": String,
 #   "name": String,
-#	"pos": { "x": float, "y": float },
-#   "vel": { "x": float, "y": float },
+#	"position": { "x": float, "y": float },
+#   "velocity": { "x": float, "y": float },
 # }
 export(bool) var debug_print = true
 const PORT = 60607
-#const BROADCAST_IP = "192.168.42.255" # home network broadcast
-const BROADCAST_IP = "127.0.0.1" # localhost
+const BROADCAST_IP = "192.168.42.255" # home network broadcast
+#const BROADCAST_IP = "127.0.0.1" # localhost
 #const BROADCAST_IP = "255.255.255.255" # broadcast everywhere, doesn't work in Godot 3.0: https://github.com/godotengine/godot/issues/20216
 const LISTEN_IP = "0.0.0.0" # listen for packets on every interface
 var peer
